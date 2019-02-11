@@ -22,17 +22,13 @@ public class List<T> {
 
 	public Element<T> get(int i) {
 		int count = 0;
-		if (i == 0) return first;
+		if (i == 0)
+			return first;
 		element = first;
 		while (element != null) {
 			element = element.getNext();
 			count++;
-			if (count != i)
-			{
-				continue;
-			}
-			else 
-			{
+			if (count == i) {
 				break;
 			}
 		}
@@ -49,16 +45,4 @@ public class List<T> {
 			first = element;
 		}
 	}
-
-	
-	public static void main(String[] args) {
-		List<String> list = new List<String>(null, null);
-		list.add("one");
-		list.add("two");
-		list.add("three");
-		list.add("four");
-		list.add("five");
-		System.out.print("element" +" " + list.get(5));
-	}
-
 }
