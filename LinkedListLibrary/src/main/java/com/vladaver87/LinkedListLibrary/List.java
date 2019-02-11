@@ -12,8 +12,9 @@ public class List<T> {
 
 	public int size() {
 		int count = 0;	
-		while(first != null) {
-			first = first.getNext();
+		element = first;
+		while(element != null) {
+			element = element.getNext();
 			count++;
 		}
 		return count;
