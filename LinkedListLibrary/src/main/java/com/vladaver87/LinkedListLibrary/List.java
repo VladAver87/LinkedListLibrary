@@ -27,13 +27,13 @@ public class List<T> {
 		while (element != null) {
 			element = element.getNext();
 			count++;
-			if (count == i)
+			if (count != i)
 			{
-				break;
+				continue;
 			}
 			else 
 			{
-				element = null;
+				break;
 			}
 		}
 		return element;
@@ -55,7 +55,10 @@ public class List<T> {
 		List<String> list = new List<String>(null, null);
 		list.add("one");
 		list.add("two");
-		System.out.print("Element" + list.get(0));
+		list.add("three");
+		list.add("four");
+		list.add("five");
+		System.out.print("element" +" " + list.get(5));
 	}
 
 }
