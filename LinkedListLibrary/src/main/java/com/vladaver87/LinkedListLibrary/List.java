@@ -6,12 +6,12 @@ public class List<T> {
 
 	public String toString() {;
 		element = first;
-		String result = "";
+		String result = "[";
 		while (element != null) {
-			result += element.getValue() + "\n";
+			result += element.getValue() + ",";
 			element = element.getNext();	
 		}
-		return result;
+		return result.substring(0, result.length() - 1) + "]";
 	}
 
 	public int size() {
