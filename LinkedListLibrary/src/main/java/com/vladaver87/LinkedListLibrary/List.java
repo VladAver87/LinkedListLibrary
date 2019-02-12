@@ -20,10 +20,11 @@ public class List<T> {
 		return count;
 	}
 
-	public Element<T> get(int i) {
+	public T get(int i) {
+		if (first == null) return null;
 		int count = 0;
 		if (i == 0)
-			return first;
+			return first.getValue();
 		element = first;
 		while (element != null) {
 			element = element.getNext();
@@ -32,7 +33,7 @@ public class List<T> {
 				break;
 			}
 		}
-		return element;
+		return element.getValue();
 	}
 
 	public void add(T value) {

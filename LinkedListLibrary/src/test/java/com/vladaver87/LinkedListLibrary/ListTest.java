@@ -13,15 +13,13 @@ public class ListTest {
 		assertNull(list.get(0));		
 		
 	}
+
 	@Test
-	public void addElement() {
+	public void checkElementOrder() {
 		list.add("one");
 		list.add("two");
 		list.add("three");
 		list.add("four");
-	}
-	@Test
-	public void checkElementOrder() {
 		assertEquals(list.get(0), "four");
 		assertEquals(list.get(1), "three");
 		assertEquals(list.get(2), "two");

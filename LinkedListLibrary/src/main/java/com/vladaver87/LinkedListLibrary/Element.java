@@ -2,20 +2,20 @@ package com.vladaver87.LinkedListLibrary;
 
 
 public class Element<T> {
-	private T element;
+	private T value;
 	private Element<T> next;
 	
-	public Element(T element, Element<T> next) {
-		this.element = element;
+	public Element(T value, Element<T> next) {
+		this.value = value;
 		this.next = next;
 	}
 	
-	public T getElement() {
-		return element;
+	public T getValue() {
+		return value;
 	}
 
-	public void setElement(T element) {
-		this.element = element;
+	public void setValue(T value) {
+		this.value = value;
 	}
 
 	public Element<T> getNext() {
@@ -28,7 +28,7 @@ public class Element<T> {
 
 	@Override
 	public String toString() {
-		return "Element" +  " " + element;
+		return ""+ value;
 	}
 	
 }
