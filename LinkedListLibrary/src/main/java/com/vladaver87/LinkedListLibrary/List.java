@@ -3,12 +3,6 @@ package com.vladaver87.LinkedListLibrary;
 public class List<T> {
 	private Element<T> element;
 	private Element<T> first;
-	private Element<T> last;
-
-	public List(Element<T> first, Element<T> last) {
-		this.first = first;
-		this.last = last;
-	}
 
 	public int size() {
 		int count = 0;
