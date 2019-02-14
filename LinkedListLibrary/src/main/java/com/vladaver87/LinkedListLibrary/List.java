@@ -4,14 +4,20 @@ public class List<T> {
 	private Element<T> element;
 	private Element<T> first;
 
-	public String toString() {;
+	public String toString() {
 		element = first;
-		String result = "[";
+		String result = "";
+		String last = "";
 		while (element != null) {
 			result += element.getValue() + ",";
-			element = element.getNext();	
+			element = element.getNext();
+			if (element.getNext() == null) {
+				last = (String) element.getValue();
+				result += last;
+				break;				
+			}					
 		}
-		return result.substring(0, result.length() - 1) + "]";
+		return "[" + result + "]";
 	}
 
 	public int size() {
@@ -50,14 +56,5 @@ public class List<T> {
 			element.setNext(first);
 			first = element;
 		}
-	}
-
-	public static void main(String[] args) {
-		List<String> list = new List<String>();
-		list.add("one");
-		list.add("two");
-		list.add("three");
-		list.add("four");
-		System.out.println(list.toString());
 	}
 }

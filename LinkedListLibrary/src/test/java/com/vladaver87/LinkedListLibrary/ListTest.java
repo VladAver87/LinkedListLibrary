@@ -64,4 +64,14 @@ public class ListTest {
 	public void checkEmptyListSize() {
 		assertEquals(list.size(), 0);
 	}
+	
+	@Test
+	public void checkListPrint() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[four,three,two,one]";
+		assertEquals(list.toString(), result);
+	}
 }
