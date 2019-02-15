@@ -1,12 +1,13 @@
 package com.vladaver87.LinkedListLibrary;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-public class ListTest {
-	List<String> list = new List<String>();
-	List<Integer> listInt = new List<Integer>();
+public class RecListTest {
+	RecList<String> list = new RecList<String>();
+	RecList<Integer> listInt = new RecList<Integer>();
 
 	@Test
 	public void testInserElement() {
