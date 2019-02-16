@@ -3,7 +3,10 @@ package com.vladaver87.LinkedListLibrary;
 public class LoopList<T> implements ILinkedList<T>{
 	private Element<T> element;
 	private Element<T> first;
-	
+
+	public interface IPredicate<T>{
+		boolean apply(T value);
+	}
 	
 	@Override
 	public String toString() {
@@ -59,4 +62,18 @@ public class LoopList<T> implements ILinkedList<T>{
 			first = element;
 		}
 	}
+	
+	public LoopList<T> filter(IPredicate<T> predicate){
+		LoopList<T> result = new LoopList<T>();
+		element = first;
+		while (element.getNext() == null) {
+			if (predicate.apply(element.getValue())){
+				result.add(element.getValue());
+			}
+			element = element.getNext();
+		}
+		return result;		
+	}
+	
+
 }
