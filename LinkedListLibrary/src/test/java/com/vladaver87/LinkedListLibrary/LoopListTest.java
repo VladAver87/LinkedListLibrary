@@ -1,9 +1,6 @@
 package com.vladaver87.LinkedListLibrary;
 
 import static org.junit.Assert.*;
-
-import java.util.function.Predicate;
-
 import org.junit.Test;
 
 public class LoopListTest {
@@ -78,7 +75,14 @@ public class LoopListTest {
 	}
 	
 	@Test
-	public void checkFilter() {
+	public void printIfOneElement() {
+		list.add("one");
+		String result = "[one]";
+		assertEquals(list.toString(), result);
+	}
+	
+	@Test
+	public void checkFilterOneElement() {
 		list.add("one");
 		list.add("two");
 		list.add("three");
@@ -86,5 +90,27 @@ public class LoopListTest {
 		String result = "[one]";
 		LoopList<String> testList = list.filter(x -> x.equals("one"));
 		assertEquals(testList.toString(), result);
+	}
+	
+	@Test
+	public void checkFilter() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[one,three]";
+		LoopList<String> testList = list.filter(x -> x.equals("one") || x.equals("three"));
+		assertEquals(testList.toString(), result);
+	}
+	
+	@Test
+	public void reverseCheck() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[one,two,three,four]";
+		list.reverse();
+		assertEquals(list.toString(), result);
 	}
 }
