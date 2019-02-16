@@ -13,10 +13,10 @@ public class LoopList<T> implements ILinkedList<T> {
 	public String toString() {
 		element = first;
 		String result = "";
-		String last = "";
+		T last = (T) "";
 		while (element != null) {
 			if (element.getNext() == null) {
-				last = (String) element.getValue();
+				last =  element.getValue();
 				result += last;
 				break;
 			}
@@ -91,6 +91,39 @@ public class LoopList<T> implements ILinkedList<T> {
 		}
 	}
 	
+	public LoopList<T> take(int n){
+		LoopList<T> result = new LoopList<T>();
+		if (first == null || n == 0) throw new NullPointerException ("List is empty or argument is null");
+		if (n == 1) {
+			result.add(first.getValue());		
+		}
+		element = first;
+		int counter = 0;
+		while (element != null) {
+			if (counter != n & n > 1) {
+			counter++;
+			result.add(element.getValue());
+			element = element.getNext();
+			} else break;
+		}
+		result.reverse();
+		return result;
+	}
 	
-
+	public LoopList<T> takeWhile(Predicate<T> p){
+		LoopList<T> result = new LoopList<T>();
+		element = first;
+		while (element != null) {
+			if (!p.test(element.getValue())) {
+				element = element.getNext();
+				continue;			
+			} else {
+				result.add(element.getValue());		
+				element = element.getNext();
+			}			
+		}
+		result.reverse();
+		return result;
+	}
+	
 }

@@ -75,6 +75,16 @@ public class LoopListTest {
 	}
 	
 	@Test
+	public void checkListIntegerPrint() {
+		listInt.add(1);
+		listInt.add(2);
+		listInt.add(3);
+		listInt.add(4);
+		String result = "[4,3,2,1]";
+		assertEquals(listInt.toString(), result);
+	}
+	
+	@Test
 	public void printIfOneElement() {
 		list.add("one");
 		String result = "[one]";
@@ -113,4 +123,26 @@ public class LoopListTest {
 		list.reverse();
 		assertEquals(list.toString(), result);
 	}
+	
+	@Test
+	public void checkTake() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[four,three,two]";
+		assertEquals(list.take(3).toString(), result);
+	}
+	
+	@Test
+	public void checkTakeWhile() {
+		listInt.add(1);
+		listInt.add(2);
+		listInt.add(3);
+		listInt.add(4);
+		String result = "[1]";
+		LoopList<Integer> testList = listInt.takeWhile(x -> x < 2);
+		assertEquals(testList.toString(), result);
+	}
+	
 }
