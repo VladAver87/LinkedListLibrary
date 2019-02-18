@@ -75,4 +75,36 @@ public class RecListTest {
 		String result = "[four,three,two,one]";
 		assertEquals(list.toString(), result);
 	}
+	
+	@Test
+	public void checkFilter() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[one,three]";
+		ILinkedList<String> testList = list.filter(x -> x.equals("one") || x.equals("three"));
+		assertEquals(testList.toString(), result);
+	}
+	
+	@Test
+	public void checkTake() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[four,three]";
+		assertEquals(list.take(2).toString(), result);
+	}
+	
+	@Test
+	public void checkTakeWhile() {
+		listInt.add(1);
+		listInt.add(2);
+		listInt.add(3);
+		listInt.add(4);
+		String result = "[3,2,1]";
+		ILinkedList<Integer> testList = listInt.takeWhile(x -> x < 4);
+		assertEquals(testList.toString(), result);
+	}
 }

@@ -1,13 +1,12 @@
 package com.vladaver87.LinkedListLibrary;
 
+import java.util.function.Predicate;
+
+
 public class LoopList<T> implements ILinkedList<T> {
 	private Element<T> element;
 	private Element<T> first;
-	
-	@FunctionalInterface
-	public interface Predicate<T> {
-		boolean test(T value);
-	}
+
 
 	@Override
 	public String toString() {
@@ -25,7 +24,8 @@ public class LoopList<T> implements ILinkedList<T> {
 		}
 		return "[" + result + "]";
 	}
-
+	
+	@Override
 	public int size() {
 		int count = 0;
 		element = first;
@@ -35,7 +35,8 @@ public class LoopList<T> implements ILinkedList<T> {
 		}
 		return count;
 	}
-
+	
+	@Override
 	public T get(int i) {
 		if (first == null)
 			return null;
@@ -52,7 +53,8 @@ public class LoopList<T> implements ILinkedList<T> {
 		}
 		return element.getValue();
 	}
-
+	
+	@Override
 	public void add(T value) {
 		Element<T> element = new Element<T>(value, null);
 		if (first == null) {
@@ -63,19 +65,21 @@ public class LoopList<T> implements ILinkedList<T> {
 			first = element;
 		}
 	}
-
-	public LoopList<T> filter(Predicate<T> predicate) {
+	
+	@Override
+	public LoopList<T> filter(Predicate<T> p) {
 		LoopList<T> result = new LoopList<T>();
 		element = first;
 		while (element != null) {
-			if (predicate.test(element.getValue())) {
+			if (p.test(element.getValue())) {
 				result.add(element.getValue());
 			}
 			element = element.getNext();
 		}
 		return result;
 	}
-
+	
+	@Override
 	public void reverse() {
 		Element<T> current = null;
 		Element<T> prev = null;
@@ -91,6 +95,7 @@ public class LoopList<T> implements ILinkedList<T> {
 		}
 	}
 	
+	@Override
 	public LoopList<T> take(int n){
 		LoopList<T> result = new LoopList<T>();
 		if (first == null || n == 0) throw new NullPointerException ("List is empty or argument is null");
@@ -110,6 +115,7 @@ public class LoopList<T> implements ILinkedList<T> {
 		return result;
 	}
 	
+	@Override
 	public LoopList<T> takeWhile(Predicate<T> p){
 		LoopList<T> result = new LoopList<T>();
 		element = first;

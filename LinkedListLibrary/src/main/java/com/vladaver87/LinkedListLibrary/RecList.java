@@ -1,5 +1,7 @@
 package com.vladaver87.LinkedListLibrary;
 
+import java.util.function.Predicate;
+
 public class RecList<T> implements ILinkedList<T> {
 	private Element<T> first;
 
@@ -18,7 +20,8 @@ public class RecList<T> implements ILinkedList<T> {
 			return "[" + result + "]";
 		}
 	}
-
+	
+	@Override
 	public int size() {
 		return sizeRec(first, 0);
 	}
@@ -30,7 +33,8 @@ public class RecList<T> implements ILinkedList<T> {
 			return currentSize;
 		}
 	}
-
+	
+	@Override
 	public void add(T value) {
 		Element<T> element = new Element<T>(value, null);
 		if (first == null) {
@@ -42,7 +46,8 @@ public class RecList<T> implements ILinkedList<T> {
 		}
 
 	}
-
+	
+	@Override
 	public T get(int i) {
 		if (first == null)
 			return null;
@@ -59,5 +64,79 @@ public class RecList<T> implements ILinkedList<T> {
 		} else {
 			return current.getValue();
 		}
+	}
+
+	@Override
+	public ILinkedList<T> filter(Predicate<T> p) {
+		RecList<T> result = new RecList<T>();
+		return filterRec(first, p, result);
+	}
+	
+	private ILinkedList<T> filterRec(Element<T> current, Predicate<T> p, RecList<T> result){	
+		if (current != null) {
+		if (p.test(current.getValue())) {
+			result.add(current.getValue());
+			return filterRec(current.getNext(), p, result);
+		} else {
+			return filterRec(current.getNext(), p, result);
+		}
+	}
+		return result;
+	}
+	
+
+	@Override
+	public void reverse() {
+		Element<T> current = null;
+		Element<T> prev = null;
+		Element<T> temp = first;
+
+		while (temp != null) {
+			current = temp;
+			temp = temp.getNext();
+			
+			current.setNext(prev);
+			prev = current;
+			first = current;
+		}
+		
+	}
+
+	@Override
+	public ILinkedList<T> take(int n) {
+		RecList<T> result = new RecList<T>();
+		if (first == null || n == 0) throw new NullPointerException ("List is empty or argument is null");
+
+		return takeRec(first, 0, n, result);
+		
+	}
+	
+	private ILinkedList<T> takeRec(Element<T> current, int counter, int elementsToReturn, RecList<T> result){
+		if(elementsToReturn == 1) result.add(current.getValue());
+		if (counter != elementsToReturn & elementsToReturn > 1) {
+			result.add(current.getValue());
+			return takeRec(current.getNext(), counter +1, elementsToReturn, result);
+		}
+		result.reverse();
+		return result;
+	}
+
+	@Override
+	public ILinkedList<T> takeWhile(Predicate<T> p) {
+		RecList<T> result = new RecList<T>();
+		return takeWhileRec(first, p, result);
+	}
+	
+	private ILinkedList<T> takeWhileRec(Element<T> current, Predicate<T> p, RecList<T> result) {
+		if (current != null) {
+		if (p.test(current.getValue())) {
+			result.add(current.getValue());
+			return takeWhileRec(current.getNext(), p, result);
+		}else {
+			return takeWhileRec(current.getNext(), p, result);
+		}
+		}
+		result.reverse();
+		return result;
 	}
 }
