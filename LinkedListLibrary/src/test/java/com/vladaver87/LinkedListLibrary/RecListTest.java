@@ -77,6 +77,16 @@ public class RecListTest {
 	}
 	
 	@Test
+	public void reverseCheck() {
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[one,two,three,four]";
+		assertEquals(list.reverse().toString(), result);
+	}
+	
+	@Test
 	public void checkFilter() {
 		list.add("one");
 		list.add("two");

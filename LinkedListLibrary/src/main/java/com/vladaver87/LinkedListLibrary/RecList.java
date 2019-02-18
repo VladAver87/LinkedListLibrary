@@ -84,9 +84,7 @@ public class RecList<T> implements ILinkedList<T> {
 		return result;
 	}
 	
-
-	@Override
-	public void reverse() {
+	public void reverseOld() {
 		Element<T> current = null;
 		Element<T> prev = null;
 		Element<T> temp = first;
@@ -117,8 +115,7 @@ public class RecList<T> implements ILinkedList<T> {
 			result.add(current.getValue());
 			return takeRec(current.getNext(), counter +1, elementsToReturn, result);
 		}
-		result.reverse();
-		return result;
+		return result.reverse();
 	}
 
 	@Override
@@ -136,7 +133,20 @@ public class RecList<T> implements ILinkedList<T> {
 			return takeWhileRec(current.getNext(), p, result);
 		}
 		}
-		result.reverse();
+		return result.reverse();
+	}
+
+	@Override
+	public ILinkedList<T> reverse() {
+		RecList<T> result = new RecList<T>();
+		return reverseRec(first, result);
+	}
+	
+	private ILinkedList<T> reverseRec(Element<T> current, RecList<T> result) {
+		if(current != null) {
+			result.add(current.getValue());
+			return reverseRec(current.getNext(), result);
+		}
 		return result;
 	}
 }

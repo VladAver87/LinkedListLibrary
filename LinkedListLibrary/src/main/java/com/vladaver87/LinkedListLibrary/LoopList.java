@@ -79,8 +79,8 @@ public class LoopList<T> implements ILinkedList<T> {
 		return result;
 	}
 	
-	@Override
-	public void reverse() {
+
+	public void reverseOld() {
 		Element<T> current = null;
 		Element<T> prev = null;
 		Element<T> temp = first;
@@ -96,7 +96,7 @@ public class LoopList<T> implements ILinkedList<T> {
 	}
 	
 	@Override
-	public LoopList<T> take(int n){
+	public ILinkedList<T> take(int n){
 		LoopList<T> result = new LoopList<T>();
 		if (first == null || n == 0) throw new NullPointerException ("List is empty or argument is null");
 		if (n == 1) {
@@ -111,12 +111,11 @@ public class LoopList<T> implements ILinkedList<T> {
 			element = element.getNext();
 			} else break;
 		}
-		result.reverse();
-		return result;
+		return result.reverse();
 	}
 	
 	@Override
-	public LoopList<T> takeWhile(Predicate<T> p){
+	public ILinkedList<T> takeWhile(Predicate<T> p){
 		LoopList<T> result = new LoopList<T>();
 		element = first;
 		while (element != null) {
@@ -128,7 +127,17 @@ public class LoopList<T> implements ILinkedList<T> {
 				element = element.getNext();
 			}			
 		}
-		result.reverse();
+		return result.reverse();
+	}
+
+	@Override
+	public ILinkedList<T> reverse() {
+		LoopList<T> result = new LoopList<T>();
+		element = first;
+		while (element != null) {
+			result.add(element.getValue());
+			element = element.getNext();
+		}
 		return result;
 	}
 	

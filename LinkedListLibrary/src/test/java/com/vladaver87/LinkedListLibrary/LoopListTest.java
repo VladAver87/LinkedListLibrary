@@ -120,8 +120,7 @@ public class LoopListTest {
 		list.add("three");
 		list.add("four");
 		String result = "[one,two,three,four]";
-		list.reverse();
-		assertEquals(list.toString(), result);
+		assertEquals(list.reverse().toString(), result);
 	}
 	
 	@Test
@@ -141,7 +140,7 @@ public class LoopListTest {
 		listInt.add(3);
 		listInt.add(4);
 		String result = "[1]";
-		LoopList<Integer> testList = listInt.takeWhile(x -> x < 2);
+		ILinkedList<Integer> testList = listInt.takeWhile(x -> x < 2);
 		assertEquals(testList.toString(), result);
 	}
 	
