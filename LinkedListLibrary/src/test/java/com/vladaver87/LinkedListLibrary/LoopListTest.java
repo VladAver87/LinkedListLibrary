@@ -137,10 +137,23 @@ public class LoopListTest {
 	public void checkTakeWhile() {
 		listInt.add(1);
 		listInt.add(2);
+		listInt.add(12);
+		listInt.add(4);
+		listInt.add(2);
+		listInt.add(2);
+		listInt.add(1);
+		listInt.add(1);
+		String result = "[1,1,2,2]";
+		ILinkedList<Integer> testList = listInt.takeWhile(x -> x < 3);
+		assertEquals(testList.toString(), result);
+	}
+	
+	@Test
+	public void checkMap() {
 		listInt.add(3);
 		listInt.add(4);
-		String result = "[1]";
-		ILinkedList<Integer> testList = listInt.takeWhile(x -> x < 2);
+		String result = "[14,13]";
+		ILinkedList<Integer> testList = listInt.map(x -> x + 10);
 		assertEquals(testList.toString(), result);
 	}
 	

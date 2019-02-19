@@ -1,5 +1,6 @@
 package com.vladaver87.LinkedListLibrary;
 
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class RecList<T> implements ILinkedList<T> {
@@ -130,7 +131,7 @@ public class RecList<T> implements ILinkedList<T> {
 			result.add(current.getValue());
 			return takeWhileRec(current.getNext(), p, result);
 		}else {
-			return takeWhileRec(current.getNext(), p, result);
+			return takeWhileRec(null, p, result);
 		}
 		}
 		return result.reverse();
@@ -148,5 +149,11 @@ public class RecList<T> implements ILinkedList<T> {
 			return reverseRec(current.getNext(), result);
 		}
 		return result;
+	}
+
+	@Override
+	public <R> ILinkedList<T> map(Function<T, R> f) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

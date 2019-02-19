@@ -1,6 +1,7 @@
 package com.vladaver87.LinkedListLibrary;
 
 import java.util.function.Predicate;
+import java.util.function.Function;
 
 public interface ILinkedList<T> {
 	public int size();
@@ -10,5 +11,6 @@ public interface ILinkedList<T> {
 	public ILinkedList<T> reverse();
 	public ILinkedList<T> take(int n);
 	public ILinkedList<T> takeWhile(Predicate<T> p);
+	public <R> ILinkedList<T> map(Function<T, R> f);
 
 }

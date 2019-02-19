@@ -111,9 +111,13 @@ public class RecListTest {
 	public void checkTakeWhile() {
 		listInt.add(1);
 		listInt.add(2);
-		listInt.add(3);
+		listInt.add(12);
 		listInt.add(4);
-		String result = "[3,2,1]";
+		listInt.add(3);
+		listInt.add(2);
+		listInt.add(1);
+		listInt.add(1);
+		String result = "[1,1,2,3]";
 		ILinkedList<Integer> testList = listInt.takeWhile(x -> x < 4);
 		assertEquals(testList.toString(), result);
 	}
