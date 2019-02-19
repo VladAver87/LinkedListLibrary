@@ -141,11 +141,12 @@ public class LoopList<T> implements ILinkedList<T> {
 	}
 
 	@Override
-	public <R> ILinkedList<T> map(Function<T, R> f) {
-		LoopList<T> result = new LoopList<T>();
+	public <R> ILinkedList<R> map(Function<T, R> f) {
+		LoopList<R> result = new LoopList<R>();
 		element = first;
 		while (element != null) {
-			result.add((T) f.apply(element.getValue()));
+			R newElement = f.apply(element.getValue());
+			result.add(newElement);
 			element = element.getNext();
 		}
 		return result.reverse();

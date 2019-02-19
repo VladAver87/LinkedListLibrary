@@ -11,6 +11,6 @@ public interface ILinkedList<T> {
 	public ILinkedList<T> reverse();
 	public ILinkedList<T> take(int n);
 	public ILinkedList<T> takeWhile(Predicate<T> p);
-	public <R> ILinkedList<T> map(Function<T, R> f);
+	public <R> ILinkedList<R> map(Function<T, R> f);
 
 }

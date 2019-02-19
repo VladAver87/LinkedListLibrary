@@ -150,10 +150,12 @@ public class LoopListTest {
 	
 	@Test
 	public void checkMap() {
-		listInt.add(3);
-		listInt.add(4);
-		String result = "[14,13]";
-		ILinkedList<Integer> testList = listInt.map(x -> x + 10);
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String result = "[four_hello,three_hello,two_hello,one_hello]";
+		ILinkedList<String> testList = list.map(x -> x + "_hello");
 		assertEquals(testList.toString(), result);
 	}
 	
