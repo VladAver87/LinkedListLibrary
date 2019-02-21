@@ -1,22 +1,27 @@
-package com.vladaver87.LinkedListLibrary;
+package com.vladaver87.linkedlistlibrary;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class RecList<T> implements ILinkedList<T> {
 	private Element<T> first;
+	Element<T> element;
 
 	@Override
 	public String toString() {
-		return toStringRec(first, "");
+		StringBuilder result = new StringBuilder();
+		if (first == null) {
+			result = null;
+		}
+		return toStringRec(first, result);
 	}
 
-	private String toStringRec(Element<T> current, String result) {
+	private String toStringRec(Element<T> current, StringBuilder result) {
 		if (current != null) {
 			if (current.getNext() == null) {
-				return toStringRec(current.getNext(), result += current.getValue());
+				return toStringRec(current.getNext(), result.append(current.getValue()));
 			}
-			return toStringRec(current.getNext(), result += current.getValue() + ",");
+			return toStringRec(current.getNext(), result.append(current.getValue() + ","));
 		} else {
 			return "[" + result + "]";
 		}
@@ -37,7 +42,7 @@ public class RecList<T> implements ILinkedList<T> {
 	
 	@Override
 	public void add(T value) {
-		Element<T> element = new Element<T>(value, null);
+		element = new Element<>(value, null);
 		if (first == null) {
 			first = element;
 
@@ -46,6 +51,25 @@ public class RecList<T> implements ILinkedList<T> {
 			first = element;
 		}
 
+	}
+	
+	@Override
+	public void addLast(T value) {
+		element = new Element<>(value, null);
+		if (first == null) {
+			first = element;
+
+		} else {
+			addLastRec(first, element);
+		}
+	}
+	
+	private void addLastRec(Element<T> current, Element<T> element) {
+		if (current.getNext() == null) {
+			current.setNext(element);
+		}else {
+			addLastRec(current.getNext(), element);
+		}
 	}
 	
 	@Override
@@ -69,7 +93,7 @@ public class RecList<T> implements ILinkedList<T> {
 
 	@Override
 	public ILinkedList<T> filter(Predicate<T> p) {
-		RecList<T> result = new RecList<T>();
+		RecList<T> result = new RecList<>();
 		return filterRec(first, p, result);
 	}
 	
@@ -103,7 +127,7 @@ public class RecList<T> implements ILinkedList<T> {
 
 	@Override
 	public ILinkedList<T> take(int n) {
-		RecList<T> result = new RecList<T>();
+		RecList<T> result = new RecList<>();
 		if (first == null || n == 0) throw new NullPointerException ("List is empty or argument is null");
 
 		return takeRec(first, 0, n, result);
@@ -112,7 +136,7 @@ public class RecList<T> implements ILinkedList<T> {
 	
 	private ILinkedList<T> takeRec(Element<T> current, int counter, int elementsToReturn, RecList<T> result){
 		if(elementsToReturn == 1) result.add(current.getValue());
-		if (counter != elementsToReturn & elementsToReturn > 1) {
+		if (counter != elementsToReturn && elementsToReturn > 1) {
 			result.add(current.getValue());
 			return takeRec(current.getNext(), counter +1, elementsToReturn, result);
 		}
@@ -121,7 +145,7 @@ public class RecList<T> implements ILinkedList<T> {
 
 	@Override
 	public ILinkedList<T> takeWhile(Predicate<T> p) {
-		RecList<T> result = new RecList<T>();
+		RecList<T> result = new RecList<>();
 		return takeWhileRec(first, p, result);
 	}
 	
@@ -139,7 +163,7 @@ public class RecList<T> implements ILinkedList<T> {
 
 	@Override
 	public ILinkedList<T> reverse() {
-		RecList<T> result = new RecList<T>();
+		RecList<T> result = new RecList<>();
 		return reverseRec(first, result);
 	}
 	
@@ -152,8 +176,18 @@ public class RecList<T> implements ILinkedList<T> {
 	}
 
 	@Override
-	public <R> ILinkedList<T> map(Function<T, R> f) {
-		// TODO Auto-generated method stub
-		return null;
+	public <R> ILinkedList<R> map(Function<T, R> f) {
+		RecList<R> result = new RecList<>();
+		return mapRec(first, f, result);
+
+	}
+	
+	private <R> ILinkedList<R> mapRec(Element<T> current, Function<T, R> f, RecList<R> result){
+		if (current != null) {
+			R newElement = f.apply(current.getValue());
+			result.add(newElement);
+			return mapRec(current.getNext(), f, result);
+		}		
+		return result.reverse();
 	}
 }

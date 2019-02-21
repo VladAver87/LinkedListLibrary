@@ -1,4 +1,4 @@
-package com.vladaver87.LinkedListLibrary;
+package com.vladaver87.linkedlistlibrary;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -9,16 +9,16 @@ public class LoopList<T> implements ILinkedList<T> {
 
 	@Override
 	public String toString() {
+		StringBuilder result = new StringBuilder();
 		element = first;
-		String result = "";
-		T last = (T) "";
+		if (element == null) result = null;
 		while (element != null) {
 			if (element.getNext() == null) {
-				last = element.getValue();
-				result += last;
+				T last = element.getValue();
+				result.append(last);
 				break;
 			}
-			result += element.getValue() + ",";
+			result.append(element.getValue() + ",");
 			element = element.getNext();
 		}
 		return "[" + result + "]";
@@ -37,25 +37,27 @@ public class LoopList<T> implements ILinkedList<T> {
 
 	@Override
 	public T get(int i) {
-		if (i == 0 & first == null)
-			return null;
 		int count = 0;
-		if (i == 0)
-			return first.getValue();
 		element = first;
+		T value = null;
+		if (first == null) 
+			return value;
+		if (i == 0)
+			value = first.getValue();
 		while (element != null) {
 			element = element.getNext();
 			count++;
 			if (count == i) {
+				value = element.getValue();
 				break;
 			}
 		}
-		return element.getValue();
+		return value;
 	}
 
 	@Override
 	public void add(T value) {
-		Element<T> element = new Element<T>(value, null);
+		element = new Element<>(value, null);
 		if (first == null) {
 			first = element;
 
@@ -64,10 +66,28 @@ public class LoopList<T> implements ILinkedList<T> {
 			first = element;
 		}
 	}
+	
+	@Override
+	public void addLast(T value) {
+		element = new Element<>(value, null);
+		if (first == null) {
+			first = element;
+
+		} else {
+			Element<T> current = first;
+			while(current != null) {
+				if (current.getNext() == null) {
+					current.setNext(element);
+					break;
+				}
+				current = current.getNext();
+			}
+		}
+	}
 
 	@Override
 	public LoopList<T> filter(Predicate<T> p) {
-		LoopList<T> result = new LoopList<T>();
+		LoopList<T> result = new LoopList<>();
 		element = first;
 		while (element != null) {
 			if (p.test(element.getValue())) {
@@ -95,7 +115,7 @@ public class LoopList<T> implements ILinkedList<T> {
 
 	@Override
 	public ILinkedList<T> take(int n) {
-		LoopList<T> result = new LoopList<T>();
+		LoopList<T> result = new LoopList<>();
 		if (first == null || n == 0)
 			throw new NullPointerException("List is empty or argument is null");
 		if (n == 1) {
@@ -104,19 +124,20 @@ public class LoopList<T> implements ILinkedList<T> {
 		element = first;
 		int counter = 0;
 		while (element != null) {
-			if (counter != n & n > 1) {
+			if (counter != n && n > 1) {
 				counter++;
 				result.add(element.getValue());
 				element = element.getNext();
-			} else
+			} else {
 				break;
+			}
 		}
 		return result.reverse();
 	}
 
 	@Override
 	public ILinkedList<T> takeWhile(Predicate<T> p) {
-		LoopList<T> result = new LoopList<T>();
+		LoopList<T> result = new LoopList<>();
 		element = first;
 		while (element != null) {
 			if (p.test(element.getValue())) {
@@ -131,7 +152,7 @@ public class LoopList<T> implements ILinkedList<T> {
 
 	@Override
 	public ILinkedList<T> reverse() {
-		LoopList<T> result = new LoopList<T>();
+		LoopList<T> result = new LoopList<>();
 		element = first;
 		while (element != null) {
 			result.add(element.getValue());
@@ -141,11 +162,12 @@ public class LoopList<T> implements ILinkedList<T> {
 	}
 
 	@Override
-	public <R> ILinkedList<T> map(Function<T, R> f) {
-		LoopList<T> result = new LoopList<T>();
+	public <R> ILinkedList<R> map(Function<T, R> f) {
+		LoopList<R> result = new LoopList<>();
 		element = first;
 		while (element != null) {
-			result.add((T) f.apply(element.getValue()));
+			R newElement = f.apply(element.getValue());
+			result.add(newElement);
 			element = element.getNext();
 		}
 		return result.reverse();
