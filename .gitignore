@@ -1,6 +1,7 @@
-# Compiled class file
+﻿# Compiled class file
 *.class
 .settings/
+.idea/
 bin/
 target/
 
