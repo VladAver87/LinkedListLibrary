@@ -1,4 +1,4 @@
-package com.vladaver87.LinkedListLibrary;
+package com.vladaver87.linkedlistlibrary;
 
 import java.util.function.Predicate;
 import java.util.function.Function;
@@ -12,5 +12,6 @@ public interface ILinkedList<T> {
 	public ILinkedList<T> take(int n);
 	public ILinkedList<T> takeWhile(Predicate<T> p);
 	public <R> ILinkedList<R> map(Function<T, R> f);
+	public void addLast(T value);
 
 }

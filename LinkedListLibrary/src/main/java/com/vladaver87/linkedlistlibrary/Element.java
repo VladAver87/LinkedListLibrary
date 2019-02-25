@@ -1,4 +1,4 @@
-package com.vladaver87.LinkedListLibrary;
+package com.vladaver87.linkedlistlibrary;
 
 
 public class Element<T> {
