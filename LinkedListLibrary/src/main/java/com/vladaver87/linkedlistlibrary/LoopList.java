@@ -1,11 +1,9 @@
 package com.vladaver87.linkedlistlibrary;
 
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 
 public class LoopList<T> implements ILinkedList<T> {
 	private Element<T> element;
@@ -15,7 +13,8 @@ public class LoopList<T> implements ILinkedList<T> {
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		element = first;
-		if (element == null) result = null;
+		if (element == null)
+			result = null;
 		while (element != null) {
 			if (element.getNext() == null) {
 				T last = element.getValue();
@@ -44,7 +43,7 @@ public class LoopList<T> implements ILinkedList<T> {
 		int count = 0;
 		element = first;
 		T value = null;
-		if (first == null) 
+		if (first == null)
 			return value;
 		if (i == 0)
 			value = first.getValue();
@@ -70,7 +69,7 @@ public class LoopList<T> implements ILinkedList<T> {
 			first = element;
 		}
 	}
-	
+
 	@Override
 	public void addLast(T value) {
 		element = new Element<>(value, null);
@@ -79,7 +78,7 @@ public class LoopList<T> implements ILinkedList<T> {
 
 		} else {
 			Element<T> current = first;
-			while(current != null) {
+			while (current != null) {
 				if (current.getNext() == null) {
 					current.setNext(element);
 					break;
@@ -176,48 +175,47 @@ public class LoopList<T> implements ILinkedList<T> {
 		}
 		return result.reverse();
 	}
-	
+
 	@Override
 	public Iterator<T> iterator() {
-		Iterator<T> iterator = new Iterator<T>() {		
-			
+		Iterator<T> iterator = new Iterator<T>() {
+
 			private Element<T> current = first;
-			
+
 			@Override
-			public boolean hasNext(){		
+			public boolean hasNext() {
 				return current != null;
-							
+
 			}
-			
-			@ Override
-			public T next(){
+
+			@Override
+			public T next() {
+				if (current == null) throw new NoSuchElementException("List is empty");
 				T result = current.getValue();
-				while (current != null) {
-					current = current.getNext();
-					return result;
-				}			
-				return null;
-				
+				current = current.getNext();
+				return result;
 			}
-			
+
 			@Override
 			public void remove() {
-				
+
 			}
-			
+
 		};
-		
+
 		return iterator;
 	}
-	
+
 	public static void main(String[] args) {
-		LoopList<String> list = new LoopList<>();
-			list.add("one");
-			list.add("two");
-			list.add("three");
-			list.add("four");
-			list.forEach(System.out::println);
-		
+		LoopList<Integer> list = new LoopList<>();
+		for (int i = 0; i <= 10; i++) {
+			list.add(i);
+		}
+		Iterator<Integer> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+
 	}
 
 }
