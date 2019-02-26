@@ -1,5 +1,6 @@
 package com.vladaver87.linkedlistlibrary;
 
+import java.util.Iterator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -189,5 +190,11 @@ public class RecList<T> implements ILinkedList<T> {
 			return mapRec(current.getNext(), f, result);
 		}		
 		return result.reverse();
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

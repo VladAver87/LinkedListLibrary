@@ -3,7 +3,7 @@ package com.vladaver87.linkedlistlibrary;
 import java.util.function.Predicate;
 import java.util.function.Function;
 
-public interface ILinkedList<T> {
+public interface ILinkedList<T> extends Iterable<T> {
 	public int size();
 	public void add(T value);
 	public T get(int i);

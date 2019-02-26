@@ -1,7 +1,11 @@
 package com.vladaver87.linkedlistlibrary;
 
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
 
 public class LoopList<T> implements ILinkedList<T> {
 	private Element<T> element;
@@ -171,6 +175,49 @@ public class LoopList<T> implements ILinkedList<T> {
 			element = element.getNext();
 		}
 		return result.reverse();
+	}
+	
+	@Override
+	public Iterator<T> iterator() {
+		Iterator<T> iterator = new Iterator<T>() {		
+			
+			private Element<T> current = first;
+			
+			@Override
+			public boolean hasNext(){		
+				return current != null;
+							
+			}
+			
+			@ Override
+			public T next(){
+				T result = current.getValue();
+				while (current != null) {
+					current = current.getNext();
+					return result;
+				}			
+				return null;
+				
+			}
+			
+			@Override
+			public void remove() {
+				
+			}
+			
+		};
+		
+		return iterator;
+	}
+	
+	public static void main(String[] args) {
+		LoopList<String> list = new LoopList<>();
+			list.add("one");
+			list.add("two");
+			list.add("three");
+			list.add("four");
+			list.forEach(System.out::println);
+		
 	}
 
 }
