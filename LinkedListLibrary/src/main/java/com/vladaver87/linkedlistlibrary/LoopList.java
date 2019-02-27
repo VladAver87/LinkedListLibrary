@@ -191,7 +191,8 @@ public class LoopList<T> implements ILinkedList<T> {
 
 			@Override
 			public T next() {
-				if (current == null) throw new NoSuchElementException("List is empty");
+				if (current == null)
+					throw new NoSuchElementException("List is empty");
 				T result = current.getValue();
 				current = current.getNext();
 				counter++;
@@ -200,25 +201,25 @@ public class LoopList<T> implements ILinkedList<T> {
 
 			@Override
 			public void remove() {
-	
+
 				remove(counter);
 			}
-			
+
 			public T remove(int position) {
 				T returnElement = null;
-				if(position < 0) {
+				if (position < 0) {
 					return null;
 				}
-				
+
 				if (position == 0) {
-					returnElement  = first.getValue();
+					returnElement = first.getValue();
 					first = first.getNext();
-				}else {
+				} else {
 					Element<T> previous = first;
 					for (int i = 0; i < position - 1; i++) {
 						previous = previous.getNext();
 					}
-					
+
 					Element<T> toDelete = previous.getNext();
 					returnElement = toDelete.getValue();
 					previous.setNext(toDelete.getNext());
@@ -226,31 +227,12 @@ public class LoopList<T> implements ILinkedList<T> {
 					counter--;
 				}
 				return returnElement;
-				
+
 			}
 
 		};
 
 		return iterator;
-	}
-
-	public static void main(String[] args) {
-		LoopList<String> list = new LoopList<>();
-		list.add("one");
-		list.add("two");
-		list.add("three");
-		list.add("four");
-		
-		
-		Iterator<String> it = list.iterator();
-		while (it.hasNext()) {
-			String temp = it.next();
-			if(temp.equals("three")) {
-				it.remove();
-				break;
-			}
-		}
-			list.forEach(System.out::println);
 	}
 
 }
