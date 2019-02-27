@@ -1,6 +1,7 @@
 package com.vladaver87.linkedlistlibrary;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -194,7 +195,60 @@ public class RecList<T> implements ILinkedList<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<T> iterator = new Iterator<T>() {
+
+			private Element<T> current = first;
+			private int counter = -1;
+
+			@Override
+			public boolean hasNext() {
+				return current != null;
+
+			}
+
+			@Override
+			public T next() {
+				if (current == null)
+					throw new NoSuchElementException("List is empty");
+				T result = current.getValue();
+				current = current.getNext();
+				counter++;
+				return result;
+			}
+
+			@Override
+			public void remove() {
+
+				remove(counter);
+			}
+
+			public T remove(int position) {
+				T returnElement = null;
+				if (position < 0) {
+					return null;
+				}
+
+				if (position == 0) {
+					returnElement = first.getValue();
+					first = first.getNext();
+				} else {
+					Element<T> previous = first;
+					for (int i = 0; i < position - 1; i++) {
+						previous = previous.getNext();
+					}
+
+					Element<T> toDelete = previous.getNext();
+					returnElement = toDelete.getValue();
+					previous.setNext(toDelete.getNext());
+					toDelete.setNext(null);
+					counter--;
+				}
+				return returnElement;
+
+			}
+
+		};
+
+		return iterator;
 	}
 }
