@@ -196,59 +196,51 @@ public class RecList<T> implements ILinkedList<T> {
 	@Override
 	public Iterator<T> iterator() {
 		Iterator<T> iterator = new Iterator<T>() {
-
-			private Element<T> current = first;
-			private int counter = -1;
+			
+			private Element<T> preFirst = first;
+			private Element<T> current = null;
+			private Element<T> previous = null;
 
 			@Override
 			public boolean hasNext() {
-				return current != null;
+				return preFirst != null;
 
 			}
 
 			@Override
 			public T next() {
-				if (current == null)
+				if (preFirst == null)
 					throw new NoSuchElementException("List is empty");
-				T result = current.getValue();
-				current = current.getNext();
-				counter++;
+				T result = preFirst.getValue();
+				previous = current;
+				current = preFirst;
+				preFirst = preFirst.getNext();
 				return result;
+
 			}
 
 			@Override
 			public void remove() {
-
-				remove(counter);
-			}
-
-			public T remove(int position) {
-				T returnElement = null;
-				if (position < 0) {
-					return null;
+				if (first == null) {
+					throw new NoSuchElementException("List is empty");
 				}
 
-				if (position == 0) {
-					returnElement = first.getValue();
+				if (first.getNext() == null) {
 					first = first.getNext();
-				} else {
-					Element<T> previous = first;
-					for (int i = 0; i < position - 1; i++) {
-						previous = previous.getNext();
-					}
 
-					Element<T> toDelete = previous.getNext();
-					returnElement = toDelete.getValue();
-					previous.setNext(toDelete.getNext());
-					toDelete.setNext(null);
-					counter--;
+				} if (previous == null){
+					Element<T> del = current.getNext();
+					current.setValue(del.getValue());
+					current.setNext(del.getNext());		
+					
+				}else {	
+					previous.setNext(current.getNext());
+
 				}
-				return returnElement;
-
 			}
-
 		};
 
 		return iterator;
 	}
+
 }
